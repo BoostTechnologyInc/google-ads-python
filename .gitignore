@@ -36,3 +36,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+.DS_Store
+client_secret_.*.json
+venv/
