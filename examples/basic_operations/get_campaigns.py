@@ -20,6 +20,7 @@ To add campaigns, run add_campaigns.py.
 
 import argparse
 import sys
+import traceback
 
 from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
@@ -64,10 +65,16 @@ if __name__ == "__main__":
     # GoogleAdsClient will read the google-ads.yaml configuration file in the
     # home directory if none is specified.
     googleads_client = GoogleAdsClient.load_from_storage(version="v17")
-    googleads_client.login_customer_id = '2551060317'
+    #googleads_client.login_customer_id = '2551060317'
 
 
     try:
+        print(f"Going to use:")
+        print(f"   developer_token={googleads_client.developer_token}")
+        print(f"   login_customer_id={googleads_client.login_customer_id}")
+        print(f"   customer_id={args.customer_id}")
+        print(f"   ====   ")
+
         main(googleads_client, args.customer_id)
     except GoogleAdsException as ex:
         print(
@@ -79,4 +86,5 @@ if __name__ == "__main__":
             if error.location:
                 for field_path_element in error.location.field_path_elements:
                     print(f"\t\tOn field: {field_path_element.field_name}")
+        print(traceback.format_exc())
         sys.exit(1)
